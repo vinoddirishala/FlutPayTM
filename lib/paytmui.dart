@@ -189,6 +189,7 @@ class PayTmState extends State<PayTmStateFull>{
                           onPressed: () async {
                             final String result = await platform.invokeMethod('makePayTM',{"transAmount":amountController.text});
 
+
                             },
                           child: new Text("Add Money",style: new TextStyle(
                               color: Colors.white,
