@@ -187,7 +187,19 @@ class PayTmState extends State<PayTmStateFull>{
                               borderRadius: BorderRadius.circular(10.0)
                           ),
                           onPressed: () async {
-                            final String result = await platform.invokeMethod('makePayTM',{"transAmount":amountController.text});
+                            final String result = await platform.invokeMethod('makePayTM',
+                                { "transAmount":amountController.text,
+                                  "emailID":"dirishalavinodkumar@gmail.com",
+                                  "ORDER_ID":"VDTL955",
+                                  "CUST_ID":"VDTL955",
+                                  "MOBILE_NO":"7396656645",
+                                  "CHANNEL_ID":"WAP",
+                                  "WEBSITE":"APPSTAGING",
+                                  "INDUSTRY_TYPE_ID":"Retail",
+                                  "CALLBACK_URL":"https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID=order1",
+                                  "CHECKSUMHASH":"w2QDRMgp1234567JEAPCIOmNgQvsi+BhpqijfM9KvFfRiPmGSt3Ddzw+oTaGCLneJwxFFq5mqTMwJXdQE2EzK4px2xruDqKZjHupz9yXev4=",
+                                  "MID":"rxazcv89315285244163"
+                                });
 
 
                             },

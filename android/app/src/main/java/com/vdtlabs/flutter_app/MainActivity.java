@@ -25,8 +25,9 @@ public class MainActivity extends FlutterActivity {
               public void onMethodCall(MethodCall call, MethodChannel.Result result) {
                 if (call.method.equals("makePayTM")) {
                   String transAmount = call.argument("transAmount");
+                  String emailID = call.argument("emailID");
                   String greetings = helloFromNativeCode();
-                  Toast.makeText(MainActivity.this, "intiate paytm trans for "+transAmount, Toast.LENGTH_SHORT).show();
+                  Toast.makeText(MainActivity.this, "intiate paytm trans for "+emailID+"for"+transAmount, Toast.LENGTH_SHORT).show();
                   result.success(greetings);
                 }else {
                   result.notImplemented();
@@ -36,8 +37,11 @@ public class MainActivity extends FlutterActivity {
   }
 
 
+
+
   private String helloFromNativeCode() {
     return "Hello from Native Android Code";
+
   }
 
 
