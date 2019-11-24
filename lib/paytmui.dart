@@ -165,24 +165,23 @@ class PayTmState extends State<PayTmStateFull>{
                               borderRadius: BorderRadius.circular(10.0)
                           ),
                           onPressed: () async {
-                            var response = await http.post("<-- your checksum generation url-->",
+                            var response = await http.post("YOUR CHECKSUM GENERATION IP here",
                             body: "{ORDER_ID:VDTLABS873,TXN_AMOUNT:"+amountController.text+"}");
                             if (response.statusCode == 200) {
                               var jsonResponse = convert.jsonDecode(response.body);
                               String checksumHash = jsonResponse['CHECKSUMHASH'];
                               final String result = await platform.invokeMethod('makePayment',
-                                  { "transAmount":"10",
-                                    "emailID":"dirishalavinodkumar@gmail.com",
+                                  { "transAmount":amountController.text,
+                                    "emailID":"YOUR EMAIL ID here",
                                     "ORDER_ID":"VDTLABS873",
                                     "CUST_ID":"VDTL955",
-                                    "MOBILE_NO":"9876543210",
+                                    "MOBILE_NO":"YOUR MOBILE NUMBER here",
                                     "CHANNEL_ID":"WAP",
-                                    "WEBSITE":"APPSTAGING",
+                                    "WEBSITE":"DEFAULT",
                                     "INDUSTRY_TYPE_ID":"Retail",
                                     "CALLBACK_URL":"https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID=VDTLABS873",
                                     "CHECKSUMHASH":checksumHash,
-                                    "MID":"<--YOUR MID here -->"
-
+                                    "MID":"YOUR MID here"
                                   });
 
                               setState(() {

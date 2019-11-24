@@ -1,6 +1,7 @@
 package com.vdtlabs.flutter_app;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.paytm.pgsdk.PaytmOrder;
@@ -52,6 +53,15 @@ public class MainActivity extends FlutterActivity {
 
     PaytmPGService Service = PaytmPGService.getStagingService();
     Map<String, String> paramMap = new HashMap<>();
+
+    Log.d("PayTMParams",call.argument("MID")+"\n"+call.argument("ORDER_ID")+"\n"+
+            call.argument("CUST_ID")+"\n"+call.argument("MOBILE_NO")+"\n"+call.argument("emailID")
+    +"\n"+call.argument("CHANNEL_ID")+"\n"+call.argument("transAmount")+"\n"+call.argument("WEBSITE")
+    +"\n"+call.argument("INDUSTRY_TYPE_ID")+"\n"+call.argument("CALLBACK_URL")+"\n"+call.argument("CHECKSUMHASH"));
+
+
+
+
     paramMap.put( "MID" , call.argument("MID"));
     paramMap.put( "ORDER_ID" , call.argument("ORDER_ID"));
     paramMap.put( "CUST_ID" , call.argument("CUST_ID"));
