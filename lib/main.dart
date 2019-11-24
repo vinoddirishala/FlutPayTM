@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/login.dart';
 import 'package:flutter_app/paytmui.dart';
+import 'dashboard.dart';
 
-void main() => runApp(PayTmStateLess());
+
+void main() => runApp(Dashboard());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.

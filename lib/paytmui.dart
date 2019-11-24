@@ -12,9 +12,9 @@ class PayTmStateLess extends StatelessWidget {
     // TODO: implement build
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "PayTm Integration",
+      title: "App Wallet",
       home: PayTmStateFull(
-        title: "PayTM",
+        title: "App Wallet",
       ),
     );
   }
@@ -33,23 +33,7 @@ class PayTmStateFull extends StatefulWidget {
 
 class PayTmState extends State<PayTmStateFull>{
 
-  static const platform = const MethodChannel('paytm');
-  String _responseFromNativeCode = 'Response';
-  Future<void> responseFromNativeCode() async {
-    String response = "";
-    try {
-      final String result = await platform.invokeMethod('helloFromNativeCode');
-      response = result;
-      print("SucessVinod");
-    } on PlatformException catch (e) {
-      response = "Failed to Invoke: '${e.message}'.";
-      print("FailVinod");
-    }
-    setState(() {
-      _responseFromNativeCode = response;
-      print(_responseFromNativeCode);
-    });
-  }
+  static const platform = const MethodChannel('payment');
 
   TextEditingController amountController = new TextEditingController();
 
@@ -176,6 +160,8 @@ class PayTmState extends State<PayTmStateFull>{
                       ),
                     ),
 
+
+
                     new Padding(
                       padding: EdgeInsets.fromLTRB(20,15,20,25),
                       child: new Container(
@@ -187,7 +173,7 @@ class PayTmState extends State<PayTmStateFull>{
                               borderRadius: BorderRadius.circular(10.0)
                           ),
                           onPressed: () async {
-                            final String result = await platform.invokeMethod('makePayTM',
+                            final String result = await platform.invokeMethod('makePayment',
                                 { "transAmount":amountController.text,
                                   "emailID":"dirishalavinodkumar@gmail.com",
                                   "ORDER_ID":"VDTL955",

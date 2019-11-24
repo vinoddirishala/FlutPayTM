@@ -11,7 +11,7 @@ import io.flutter.plugins.GeneratedPluginRegistrant;
 
 public class MainActivity extends FlutterActivity {
 
-  private static final String CHANNEL = "paytm";
+  private static final String CHANNEL = "payment";
 
 
   @Override
@@ -23,7 +23,7 @@ public class MainActivity extends FlutterActivity {
             new MethodChannel.MethodCallHandler() {
               @Override
               public void onMethodCall(MethodCall call, MethodChannel.Result result) {
-                if (call.method.equals("makePayTM")) {
+                if (call.method.equals("makePayment")) {
                   String transAmount = call.argument("transAmount");
                   String emailID = call.argument("emailID");
                   String greetings = helloFromNativeCode();
@@ -37,9 +37,13 @@ public class MainActivity extends FlutterActivity {
   }
 
 
+  public void intiatePayment(){
+
+  }
 
 
   private String helloFromNativeCode() {
+
     return "Hello from Native Android Code";
 
   }
