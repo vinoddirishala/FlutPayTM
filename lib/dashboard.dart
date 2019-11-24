@@ -77,7 +77,6 @@ class DashboardState extends State<DashboardSF>{
 
                           new Text("Wallet"),
 
-                          
                         ],
                       ),
                     ),

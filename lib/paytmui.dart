@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:toast/toast.dart';
 import 'dart:async';
+import 'dart:convert' as convert;
+import 'package:http/http.dart' as http;
+
 
 
 
@@ -36,6 +39,9 @@ class PayTmState extends State<PayTmStateFull>{
   static const platform = const MethodChannel('payment');
 
   TextEditingController amountController = new TextEditingController();
+
+  String txnResponse = "Please wait...";
+
 
 
   @override
@@ -120,7 +126,6 @@ class PayTmState extends State<PayTmStateFull>{
                               child: new Text("200",
                                 textAlign: TextAlign.center,),
                             ),),
-
                             new Expanded(child: new Container(
                               child: new Text("200",
                                 textAlign: TextAlign.center,),
@@ -129,39 +134,26 @@ class PayTmState extends State<PayTmStateFull>{
                         ),
                       ),
                     ),
-
                     new Padding(
                       padding: EdgeInsets.all(20.0),
                       child: new Container(
                         width: MediaQuery.of(context).size.width,
                         child: new Row(
                           children: <Widget>[
-
-
                             new Expanded(child: new Container(
                               child: new Text("200",
                                 textAlign: TextAlign.center,
                                 style: new TextStyle(
-
                                 ),),
                             ),),
-
                             new Expanded(child: new Container(
                               child: new Text("200",
                                 textAlign: TextAlign.center,),
                             ),),
-
                             new Expanded(child: new Container(
                               child: new Text("200",
                                 textAlign: TextAlign.center,),
-                            ),)
-                          ],
-                        ),
-                      ),
-                    ),
-
-
-
+                            ),)],),),),
                     new Padding(
                       padding: EdgeInsets.fromLTRB(20,15,20,25),
                       child: new Container(
@@ -173,7 +165,39 @@ class PayTmState extends State<PayTmStateFull>{
                               borderRadius: BorderRadius.circular(10.0)
                           ),
                           onPressed: () async {
-                            final String result = await platform.invokeMethod('makePayment',
+                            var response = await http.post("<-- your checksum generation url-->",
+                            body: "{ORDER_ID:VDTLABS873,TXN_AMOUNT:"+amountController.text+"}");
+                            if (response.statusCode == 200) {
+                              var jsonResponse = convert.jsonDecode(response.body);
+                              String checksumHash = jsonResponse['CHECKSUMHASH'];
+                              final String result = await platform.invokeMethod('makePayment',
+                                  { "transAmount":"10",
+                                    "emailID":"dirishalavinodkumar@gmail.com",
+                                    "ORDER_ID":"VDTLABS873",
+                                    "CUST_ID":"VDTL955",
+                                    "MOBILE_NO":"9876543210",
+                                    "CHANNEL_ID":"WAP",
+                                    "WEBSITE":"APPSTAGING",
+                                    "INDUSTRY_TYPE_ID":"Retail",
+                                    "CALLBACK_URL":"https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID=VDTLABS873",
+                                    "CHECKSUMHASH":checksumHash,
+                                    "MID":"<--YOUR MID here -->"
+
+                                  });
+
+                              setState(() {
+                                txnResponse = result;
+                              });
+
+
+
+
+                            } else {
+                              Toast.show("failed", context);
+                            }
+
+
+                           /* final String result = await platform.invokeMethod('makePayment',
                                 { "transAmount":amountController.text,
                                   "emailID":"dirishalavinodkumar@gmail.com",
                                   "ORDER_ID":"VDTL955",
@@ -182,10 +206,13 @@ class PayTmState extends State<PayTmStateFull>{
                                   "CHANNEL_ID":"WAP",
                                   "WEBSITE":"APPSTAGING",
                                   "INDUSTRY_TYPE_ID":"Retail",
-                                  "CALLBACK_URL":"https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID=order1",
+                                  "CALLBACK_URL":"https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID=VDTL955",
                                   "CHECKSUMHASH":"w2QDRMgp1234567JEAPCIOmNgQvsi+BhpqijfM9KvFfRiPmGSt3Ddzw+oTaGCLneJwxFFq5mqTMwJXdQE2EzK4px2xruDqKZjHupz9yXev4=",
-                                  "MID":"rxazcv89315285244163"
-                                });
+                                  "MID":"Androi78288874845632"
+                                });*/
+
+                            // payment response base screen redirection
+                           // result == 0 ? "":"";
 
 
                             },
@@ -200,6 +227,11 @@ class PayTmState extends State<PayTmStateFull>{
 
 
             ),
+
+
+            new Text("Txn Response:\n\n"+txnResponse),
+
+
             
             
 
